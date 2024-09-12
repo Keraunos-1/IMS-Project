@@ -363,48 +363,49 @@ def update():
     name_entry.insert(0, product_name)
     
     date_label = tk.Label(update_window, text="Date:")
-    date_label.grid(row=0, column=0, padx=5, pady=5)
+    date_label.grid(row=1, column=0, padx=5, pady=5)
     date_entry = tk.Entry(update_window)
-    date_entry.grid(row=0, column=1, padx=5, pady=5)
-    date_entry.insert(0, product_name)
+    date_entry.grid(row=1, column=1, padx=5, pady=5)
+    date_entry.insert(0, date)
     
-    name_label = tk.Label(update_window, text="Office Belong:")
-    name_label.grid(row=0, column=0, padx=5, pady=5)
-    name_entry = tk.Entry(update_window)
-    name_entry.grid(row=0, column=1, padx=5, pady=5)
-    name_entry.insert(0, product_name)
+    belong_label = tk.Label(update_window, text="Office Belong:")
+    belong_label.grid(row=2, column=0, padx=5, pady=5)
+    belong_entry = tk.Entry(update_window)
+    belong_entry.grid(row=2, column=1, padx=5, pady=5)
+    belong_entry.insert(0, product_belong)
 
     qty_label = tk.Label(update_window, text="Quantity:")
-    qty_label.grid(row=1, column=0, padx=5, pady=5)
+    qty_label.grid(row=3, column=0, padx=5, pady=5)
     qty_entry = tk.Entry(update_window)
-    qty_entry.grid(row=1, column=1, padx=5, pady=5)
+    qty_entry.grid(row=3, column=1, padx=5, pady=5)
     qty_entry.insert(0, product_qty)
 
     price_label = tk.Label(update_window, text="Price:")
-    price_label.grid(row=2, column=0, padx=5, pady=5)
+    price_label.grid(row=4, column=0, padx=5, pady=5)
     price_entry = tk.Entry(update_window)
-    price_entry.grid(row=2, column=1, padx=5, pady=5)
+    price_entry.grid(row=4, column=1, padx=5, pady=5)
     price_entry.insert(0, product_price)
+    
     def update_product():
         new_product_name = name_entry.get()
         new_product_qty = qty_entry.get()
         new_product_price = price_entry.get()
         new_entry_date = date_entry.get()
-
+        new_product_belong = belong_entry.get()
         Database()
         cursor.execute("""
             UPDATE product
             SET product_name = ?, date = ?, product_belong = ?, product_qty = ?, product_price = ?
             WHERE product_name = ?""", 
-        (new_product_name, new_date, new_product_qty, new_product_price, product_name))
+        (new_product_name, new_entry_date, new_product_belong, new_product_qty, new_product_price, product_name))
         conn.commit()
         cursor.close()
         conn.close()
         DisplayData()
 
     update_button = tk.Button(update_window, text="Update", command=update_product)
-    update_button.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
-
+    update_button.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
+    
 def Delete():
     """
     This function is used to delete a selected product from the inventory.
